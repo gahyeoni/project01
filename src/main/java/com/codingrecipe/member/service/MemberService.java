@@ -4,10 +4,8 @@ import com.codingrecipe.member.dto.MemberDTO;
 import com.codingrecipe.member.entity.MemberEntity;
 import com.codingrecipe.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +28,7 @@ public class MemberService {
             1. 회원이 입력한 이메일로 DB에서 조회를 함
             2. DB에서 조회한 비밀번호와 사용자가 입력한 비밀번호가 일치하는지 판단
          */
+        //null값 있을까봐 Optional로 wrapper
         Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberDTO.getMemberEmail());
         if(byMemberEmail.isPresent()){
             // 조회 결과가 있다(해당 이메일을 가진 회원 정보가 있다)
@@ -72,6 +71,35 @@ public class MemberService {
             return MemberDTO.toMemberDTO(optionalMemberEntity.get());
         }else {
             return null;
+        }
+    }
+
+    public MemberDTO updateForm(String myEmail) {
+        Optional<MemberEntity> optionalMemberEntity = memberRepository.findByMemberEmail(myEmail);
+        if (optionalMemberEntity.isPresent()) {
+            return MemberDTO.toMemberDTO(optionalMemberEntity.get());
+        }else {
+            return null;
+        }
+
+    }
+
+    public void update(MemberDTO memberDTO) {
+        memberRepository.save(MemberEntity.toUpdateMemberEntity(memberDTO));
+    }
+
+    public void deleteById(Long id) {
+        memberRepository.deleteById(id);
+    }
+
+    public String emailCheck(String memberEmail) {
+        Optional<MemberEntity> byMemberEmail = memberRepository.findByMemberEmail(memberEmail);
+        if(byMemberEmail.isPresent()) {
+            //조회결과가 있다 -> 중복되어 사용할 수 없다.
+            return null;
+        }else {
+            //조회결과가 없다 -> 사용할 수 있다.
+            return "ok";
         }
     }
 }

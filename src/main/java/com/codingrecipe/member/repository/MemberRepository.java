@@ -3,7 +3,6 @@ package com.codingrecipe.member.repository;
 import com.codingrecipe.member.entity.MemberEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.lang.reflect.Member;
 import java.util.Optional;
 
 //Entity객체로 넘겨줘야됨.

@@ -5,10 +5,19 @@
     <title>index</title>
 </head>
 <body>
-    <h2>Hello Spring Boot!!</h2>
+    <img src="image1.jpeg">
+    <h2>(주)가현주식회사</h2>
     <a href="/member/save">회원가입</a> <!--Controller->GetMapping-->
     <a href="/member/login">로그인</a>
     <!-- 회원 목록보기  -->
     <a href="/member/">회원목록</a>
+    <button onclick="saveReq()">글작성</button>
+
+<!--<a href="/board/save">글작성(링크)</a>-->
 </body>
+<script>
+    const saveReq = () => {
+        location.href = "/board/save";
+    }
+</script>
 </html>
